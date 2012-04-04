@@ -79,7 +79,7 @@ public class GrowlPublisher extends Notifier {
 				for(String clientIp : clients) {
 					if (Pinger.host(clientIp)) {
 						LOGGER.log(Level.INFO, "Sending Growl to " + clientIp + "...");
-						new Growler().send(clientIp, password, message);
+						new Growler().send(clientIp, password, message, build.getResult());
 					} else {
 						LOGGER.log(Level.INFO, "Cannot send	 Growl to " + clientIp + ", host is down.");
 					}

@@ -1,5 +1,6 @@
 package hudson.plugins.growl.growler;
 
+import hudson.model.Result;
 import hudson.plugins.growl.util.Message;
 import net.sf.libgrowl.Application;
 import net.sf.libgrowl.GrowlConnector;
@@ -30,14 +31,14 @@ public class Growler  {
 		buildNotify = new NotificationType("BuildNotify");
 	}
 	
-	public void send(String clientIp, String password, Message message){
+	public void send(String clientIp, String password, Message message, Result buildResult){
 		String messageText = message.getMessageText();
 		GrowlConnector growl = new GrowlConnector(clientIp);
 		growl.setPassword(password);
 		growl.register(jenkinsApp,  new NotificationType[] { buildNotify } );
 
 		Notification jenkinsNotify = new Notification(jenkinsApp, buildNotify, buildName, messageText);
-		jenkinsNotify.setSticky(true);
+		jenkinsNotify.setSticky(buildResult != Result.SUCCESS);
 		jenkinsNotify.setCallBackURL(message.getUrl());
 
 		// if growl can't send notification, try to send to mac.

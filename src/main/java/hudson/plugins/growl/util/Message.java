@@ -18,7 +18,7 @@ public class Message {
 	}
 	
 	private void create(){
-		String projectName = build.getProject().getName();
+		String projectName = build.getProject().getFullName();
 		String result = build.getResult().toString();
 	
 		String absoluteBuildURL = descriptor.getUrl() + build.getUrl();
